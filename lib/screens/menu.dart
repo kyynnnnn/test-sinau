@@ -35,10 +35,6 @@ class _BottomNavigationBarExampleState
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
       'Index 3: School',
       style: optionStyle,
     ),
@@ -74,10 +70,6 @@ class _BottomNavigationBarExampleState
             BottomNavigationBarItem(
               icon: Icon(Icons.book),
               label: 'Kosa Kata',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.text_snippet_rounded),
-              label: 'Ujianmu',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
