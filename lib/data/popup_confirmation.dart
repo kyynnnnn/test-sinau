@@ -8,7 +8,7 @@ class PurchaseConfirmationDialog {
         return AlertDialog(
           title: Text('Konfirmasi Pembelian'),
           content: Text(
-              'Apakah Anda yakin ingin membeli Membership Premium seharga Rp.59.000?'),
+              'Apakah Anda yakin ingin membeli Membership VIP seharga Rp.59.000?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -21,6 +21,34 @@ class PurchaseConfirmationDialog {
                 Navigator.of(context).pop(true);
               },
               child: Text('Beli'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class CancelConfirmationDialog {
+  static Future<bool?> show(BuildContext context) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi Pembelian'),
+          content: Text('Apakah Anda yakin ingin membatalkan Membership VIP?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text('Tidak'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text('Ya'),
             ),
           ],
         );
