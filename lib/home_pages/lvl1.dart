@@ -24,16 +24,23 @@ class _pageLvl1State extends State<pageLvl1> {
   void getNamed() async {
     final tes = await AuthService().getStatus();
 
+    final docLength = AuthService().getLength1();
+
     print(tes);
 
     setState(() {
       member = tes.toString();
 
-      if (member == "VIP") {
-        lenght = 3;
+      if (member == "Gratis") {
+        lenght = 1;
         print('tes');
       } else {
-        lenght = 1;
+        docLength.then((value) {
+          setState(() {
+            lenght = value;
+            print(value);
+          });
+        });
       }
     });
   }
@@ -58,6 +65,7 @@ class _pageLvl1State extends State<pageLvl1> {
                   );
                 } else {
                   final users = snapshot.data!.docs;
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -101,78 +109,86 @@ class _pageLvl1State extends State<pageLvl1> {
                           itemCount: lenght,
                           itemBuilder: (context, index) {
                             final user = users[index];
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 258,
-                              margin: EdgeInsets.only(bottom: 15),
-                              decoration: BoxDecoration(
-                                  color: blue,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12))),
-                              child: Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user['title'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
+                            return Column(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 258,
+                                  margin: EdgeInsets.only(bottom: 15),
+                                  decoration: BoxDecoration(
+                                      color: blue,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          user['title'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Contoh kalimat: ',
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          user['contoh'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Arti kalimat: ',
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          user['arti'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                        Text(
+                                          user['deskripsi'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Contoh kalimat: ',
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                    Text(
-                                      user['contoh'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Arti kalimat: ',
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                    Text(
-                                      user['arti'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    const SizedBox(
-                                      height: 24,
-                                    ),
-                                    Text(
-                                      user['deskripsi'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                                (lenght == 1) ? Text("Gratis") : Text("")
+                              ],
                             );
                           },
                         ),
                       ),
+                      //(users.length == )
                     ],
                   );
                 }

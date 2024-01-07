@@ -121,6 +121,7 @@ class _ProfilePageeState extends State<ProfilePagee> {
                                     ? 'Silahkan Update Data !'
                                     : '${user['birth']}'),
                             SizedBox(height: 1.0),
+                            // if ('member' == 'VIP')
                             InkWell(
                               onTap: () async {
                                 print('Tombol Beli Ditekan');
