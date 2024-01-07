@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sinau/data/popup_confirmation.dart';
 import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/widgets/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class pageLvl1 extends StatefulWidget {
   const pageLvl1({super.key});
@@ -182,7 +184,65 @@ class _pageLvl1State extends State<pageLvl1> {
                                     ),
                                   ),
                                 ),
-                                (lenght == 1) ? Text("Gratis") : Text("")
+                                (member == "Gratis")
+                                    ? InkWell(
+                                        onTap: () async {
+                                          print('Tombol Beli Ditekan');
+                                          PurchaseConfirmationDialog();
+                                          bool? result =
+                                              await PurchaseConfirmationDialog
+                                                  .show(context);
+                                          if (result!) {
+                                            final FirebaseFirestore firestore =
+                                                FirebaseFirestore.instance;
+
+                                            FirebaseAuth auth =
+                                                FirebaseAuth.instance;
+
+                                            String? userId =
+                                                auth.currentUser?.uid;
+
+                                            final docUser = firestore
+                                                .collection('users')
+                                                .doc(userId);
+
+                                            docUser.update({
+                                              'member': 'VIP',
+                                            });
+                                            print('Pembelian dikonfirmasi');
+                                          } else {
+                                            print('Pembelian dibatalkan');
+                                          }
+                                        },
+                                        child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 75,
+                                            decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.topRight,
+                                                    colors: [green, lightBlue]),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10))),
+                                            child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Berlangganan untuk dapatkan akses penuh dalam aplikasi!",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts
+                                                      .plusJakartaSans(
+                                                          color: Colors.white,
+                                                          fontStyle:
+                                                              FontStyle.italic,
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                ))),
+                                      )
+                                    : Text("")
                               ],
                             );
                           },
