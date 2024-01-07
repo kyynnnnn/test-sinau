@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/widgets/colors.dart';
 
 class pageLvl3 extends StatefulWidget {
@@ -11,6 +12,39 @@ class pageLvl3 extends StatefulWidget {
 }
 
 class _pageLvl3State extends State<pageLvl3> {
+  String member = '';
+  int lenght = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getNamed();
+  }
+
+  void getNamed() async {
+    final tes = await AuthService().getStatus();
+
+    final docLength = AuthService().getLength3();
+
+    print(tes);
+
+    setState(() {
+      member = tes.toString();
+
+      if (member == "Gratis") {
+        lenght = 1;
+        print('tes');
+      } else {
+        docLength.then((value) {
+          setState(() {
+            lenght = value;
+            print(value);
+          });
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,104 +105,111 @@ class _pageLvl3State extends State<pageLvl3> {
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: users.length,
+                          itemCount: lenght,
                           itemBuilder: (context, index) {
                             final user = users[index];
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 375,
-                              margin: EdgeInsets.only(bottom: 15),
-                              decoration: BoxDecoration(
-                                  color: green,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12))),
-                              child: Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user['title'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
+                            return Column(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 375,
+                                  margin: EdgeInsets.only(bottom: 15),
+                                  decoration: BoxDecoration(
+                                      color: green,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          user['title'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          user['deskripsi'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Contoh kalimat: ',
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          user['contoh1'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          user['arti1'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(
+                                          user['contoh2'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          user['arti2'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(
+                                          user['contoh3'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          user['arti3'],
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      user['deskripsi'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Contoh kalimat: ',
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                    Text(
-                                      user['contoh1'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text(
-                                      user['arti1'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      user['contoh2'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text(
-                                      user['arti2'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      user['contoh3'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text(
-                                      user['arti3'],
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                                (member == "Gratis") ? Text("Gratis") : Text("")
+                              ],
                             );
                           },
                         ),

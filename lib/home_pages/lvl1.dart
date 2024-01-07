@@ -182,7 +182,7 @@ class _pageLvl1State extends State<pageLvl1> {
                                     ),
                                   ),
                                 ),
-                                (lenght == 1) ? Text("Gratis") : Text("")
+                                (member == "Gratis") ? Text("Gratis") : Text("")
                               ],
                             );
                           },
