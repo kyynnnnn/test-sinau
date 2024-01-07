@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:sinau/screens/home_screen.dart';
+import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/screens/menu.dart';
 import 'package:sinau/screens/register.dart';
 import 'package:sinau/widgets/colors.dart';
@@ -14,6 +15,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(color: gray)),
                 child: TextField(
+                  controller: emailController,
                   style: GoogleFonts.plusJakartaSans(
                       color: black,
                       fontSize: 16.0,
@@ -121,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(color: gray)),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: _isObscure,
                   style: GoogleFonts.plusJakartaSans(
                       color: black,
@@ -162,9 +168,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const MenuTab()));
+                  onPressed: () async {
+                    final result = await AuthService().login(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+
+                    if (result == 'true') {
+                      Navigator.pushNamed(context, '/home');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(result ?? 'An error Occurred')));
+                    }
                   },
                   child: Text(
                     "Masuk",

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:sinau/screens/home_screen.dart';
@@ -12,6 +14,8 @@ class SetupUser extends StatefulWidget {
 }
 
 class _SetupUserState extends State<SetupUser> {
+  TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +83,7 @@ class _SetupUserState extends State<SetupUser> {
                     borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(color: gray)),
                 child: TextField(
+                  controller: nameController,
                   style: GoogleFonts.plusJakartaSans(
                       color: black,
                       fontSize: 16.0,
@@ -111,8 +116,20 @@ class _SetupUserState extends State<SetupUser> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const MenuTab()));
+                    final FirebaseFirestore firestore =
+                        FirebaseFirestore.instance;
+
+                    FirebaseAuth auth = FirebaseAuth.instance;
+
+                    String? userId = auth.currentUser?.uid;
+
+                    final docUser = firestore.collection('users').doc(userId);
+
+                    docUser.update({
+                      'name': nameController.text,
+                    });
+
+                    Navigator.pushNamed(context, '/home');
                   },
                   child: Text(
                     "Lanjutkan",

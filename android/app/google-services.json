@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "673639868309",
+    "project_id": "sinau-26acd",
+    "storage_bucket": "sinau-26acd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673639868309:android:226c9c9bfaf686bb43389c",
+        "android_client_info": {
+          "package_name": "com.example.sinau"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeShS9j22DayMhRROMI-Au22r_2xLn2vc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

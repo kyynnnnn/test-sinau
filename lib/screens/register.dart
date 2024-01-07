@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/screens/login.dart';
 import 'package:sinau/screens/setup_user.dart';
 import 'package:sinau/widgets/colors.dart';
@@ -14,6 +15,10 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _isObscure = true;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                       border: Border.all(color: gray)),
                   child: TextField(
+                    controller: emailController,
                     style: GoogleFonts.plusJakartaSans(
                         color: black,
                         fontSize: 16.0,
@@ -121,6 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                       border: Border.all(color: gray)),
                   child: TextField(
+                    controller: passwordController,
                     obscureText: _isObscure,
                     style: GoogleFonts.plusJakartaSans(
                         color: black,
@@ -171,6 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                       border: Border.all(color: gray)),
                   child: TextField(
+                    controller: confirmPasswordController,
                     obscureText: _isObscure,
                     style: GoogleFonts.plusJakartaSans(
                         color: black,
@@ -213,9 +221,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SetupUser()));
+                    onPressed: () async {
+                      if (passwordController.text ==
+                          confirmPasswordController.text) {
+                        final result = await AuthService().register(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+
+                        if (result == 'true') {
+                          Navigator.pushNamed(context, '/setup-user');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(result ?? 'An error Occurred')));
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Kata Sandi tidak sama')));
+                      }
                     },
                     child: Text(
                       "Daftar",
@@ -233,8 +256,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment.center,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                      Navigator.pushNamed(context, '/login');
                     },
                     child: Text(
                       "Sudah punya akun? Yuk masuk!",

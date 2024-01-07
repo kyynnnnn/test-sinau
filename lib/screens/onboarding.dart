@@ -74,8 +74,7 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const RegisterScreen()));
+                  Navigator.pushNamed(context, '/register');
                 },
                 child: Text(
                   "Mulai Belajar",

@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sinau/screens/pages/dict.dart';
+import 'package:sinau/screens/pages/profile.dart';
 import 'package:sinau/widgets/colors.dart';
-import 'package:sinau/screens/pages/home.dart';
-
-class MenuTab extends StatelessWidget {
-  const MenuTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomNavigationBarExample(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+import 'package:sinau/screens/pages/beranda.dart';
+//import 'package:sinau/screens/pages/profil';
 
 class BottomNavigationBarExample extends StatefulWidget {
   const BottomNavigationBarExample({super.key});
@@ -28,16 +19,10 @@ class _BottomNavigationBarExampleState
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: School',
-      style: optionStyle,
-    ),
+    kosaKata(),
+    ProfilePagee(),
   ];
 
   void _onItemTapped(int index) {
@@ -52,6 +37,7 @@ class _BottomNavigationBarExampleState
       // appBar: AppBar(
       //   title: const Text('BottomNavigationBar Sample'),
       // ),
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
