@@ -74,7 +74,7 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/register');
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: Text(
                   "Mulai Belajar",
