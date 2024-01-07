@@ -1,4 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sinau/data/home_menu.dart';
@@ -21,7 +21,9 @@ class ListViewCustom extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/lvl${index + 1}');
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10.0, vertical: 10.0),
