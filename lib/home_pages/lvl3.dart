@@ -117,7 +117,7 @@ class _pageLvl3State extends State<pageLvl3> {
                                   height: 375,
                                   margin: EdgeInsets.only(bottom: 15),
                                   decoration: BoxDecoration(
-                                      color: green,
+                                      color: blue,
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(12))),
                                   child: Padding(
@@ -131,7 +131,7 @@ class _pageLvl3State extends State<pageLvl3> {
                                         Text(
                                           user['title'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 20,
                                               fontWeight: FontWeight.w700),
                                         ),
@@ -141,7 +141,7 @@ class _pageLvl3State extends State<pageLvl3> {
                                         Text(
                                           user['deskripsi'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400),
                                         ),
@@ -151,21 +151,21 @@ class _pageLvl3State extends State<pageLvl3> {
                                         Text(
                                           'Contoh kalimat: ',
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16),
                                         ),
                                         Text(
                                           user['contoh1'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400),
                                         ),
                                         Text(
                                           user['arti1'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
                                               fontStyle: FontStyle.italic),
@@ -176,14 +176,14 @@ class _pageLvl3State extends State<pageLvl3> {
                                         Text(
                                           user['contoh2'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400),
                                         ),
                                         Text(
                                           user['arti2'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
                                               fontStyle: FontStyle.italic),
@@ -194,14 +194,14 @@ class _pageLvl3State extends State<pageLvl3> {
                                         Text(
                                           user['contoh3'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400),
                                         ),
                                         Text(
                                           user['arti3'],
                                           style: GoogleFonts.plusJakartaSans(
-                                              color: black,
+                                              color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
                                               fontStyle: FontStyle.italic),
