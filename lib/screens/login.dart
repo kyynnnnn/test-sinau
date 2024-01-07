@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 72.0,
               ),
               IconButton(
+                padding: const EdgeInsets.all(0),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

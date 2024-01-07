@@ -30,6 +30,7 @@ class _SetupUserState extends State<SetupUser> {
                 height: 72.0,
               ),
               IconButton(
+                padding: const EdgeInsets.all(0),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
