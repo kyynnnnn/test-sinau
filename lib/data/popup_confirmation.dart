@@ -35,7 +35,7 @@ class CancelConfirmationDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Konfirmasi Pembelian'),
+          title: Text('Konfirmasi Pembatalan'),
           content: Text('Apakah Anda yakin ingin membatalkan Membership VIP?'),
           actions: <Widget>[
             TextButton(
