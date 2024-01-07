@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sinau/data/popup_confirmation.dart';
 import 'package:sinau/data/tap.dart';
+import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/screens/pages/profile_edit.dart';
 import 'package:sinau/widgets/colors.dart';
 
@@ -16,7 +17,22 @@ class ProfilePagee extends StatefulWidget {
 
 class _ProfilePageeState extends State<ProfilePagee> {
   String name = '';
+  String member = '';
   DateTime? currentBackPressTime;
+
+  @override
+  void initState() {
+    super.initState();
+    getStatus();
+  }
+
+  void getStatus() async {
+    final tes = await AuthService().getStatus();
+
+    setState(() {
+      member = tes.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,51 +138,110 @@ class _ProfilePageeState extends State<ProfilePagee> {
                                     : '${user['birth']}'),
                             SizedBox(height: 1.0),
                             // if ('member' == 'VIP')
-                            InkWell(
-                              onTap: () async {
-                                print('Tombol Beli Ditekan');
-                                PurchaseConfirmationDialog();
-                                bool? result =
-                                    await PurchaseConfirmationDialog.show(
-                                        context);
-                                if (result!) {
-                                  final FirebaseFirestore firestore =
-                                      FirebaseFirestore.instance;
 
-                                  FirebaseAuth auth = FirebaseAuth.instance;
+                            (member == 'Gratis')
+                                ? InkWell(
+                                    onTap: () async {
+                                      print('Tombol Beli Ditekan');
+                                      PurchaseConfirmationDialog();
+                                      bool? result =
+                                          await PurchaseConfirmationDialog.show(
+                                              context);
+                                      if (result!) {
+                                        final FirebaseFirestore firestore =
+                                            FirebaseFirestore.instance;
 
-                                  String? userId = auth.currentUser?.uid;
+                                        FirebaseAuth auth =
+                                            FirebaseAuth.instance;
 
-                                  final docUser =
-                                      firestore.collection('users').doc(userId);
+                                        String? userId = auth.currentUser?.uid;
 
-                                  docUser.update({
-                                    'member': 'VIP',
-                                  });
-                                  print('Pembelian dikonfirmasi');
-                                } else {
-                                  print('Pembelian dibatalkan');
-                                }
-                              },
-                              child: Container(
-                                width: 200,
-                                height: 40,
-                                margin: EdgeInsets.symmetric(vertical: 8.0),
-                                padding: EdgeInsets.all(12.0),
-                                decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 14, 250, 171),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Center(
-                                  child: Text(
-                                    'Beli Membership',
-                                    style: GoogleFonts.plusJakartaSans(
-                                        color: Color.fromARGB(255, 109, 3, 3),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700),
+                                        final docUser = firestore
+                                            .collection('users')
+                                            .doc(userId);
+
+                                        docUser.update({
+                                          'member': 'VIP',
+                                        });
+                                        print('Pembelian dikonfirmasi');
+                                      } else {
+                                        print('Pembelian dibatalkan');
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 200,
+                                      height: 40,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: EdgeInsets.all(12.0),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 14, 250, 171),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      child: Center(
+                                        child: Text(
+                                          'Beli Membership',
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Color.fromARGB(
+                                                  255, 109, 3, 3),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : InkWell(
+                                    onTap: () async {
+                                      print('Tombol Batal Ditekan');
+                                      CancelConfirmationDialog();
+                                      bool? result =
+                                          await CancelConfirmationDialog.show(
+                                              context);
+                                      if (result!) {
+                                        final FirebaseFirestore firestore =
+                                            FirebaseFirestore.instance;
+
+                                        FirebaseAuth auth =
+                                            FirebaseAuth.instance;
+
+                                        String? userId = auth.currentUser?.uid;
+
+                                        final docUser = firestore
+                                            .collection('users')
+                                            .doc(userId);
+
+                                        docUser.update({
+                                          'member': 'Gratis',
+                                        });
+                                        print('Pembelian dikonfirmasi');
+                                      } else {
+                                        print('Pembelian dibatalkan');
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 200,
+                                      height: 40,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: EdgeInsets.all(12.0),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 223, 110, 4),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      child: Center(
+                                        child: Text(
+                                          'Batalkan Membership',
+                                          style: GoogleFonts.plusJakartaSans(
+                                              color: Color.fromARGB(
+                                                  255, 255, 196, 196),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, '/edit-profile');

@@ -100,4 +100,11 @@ class AuthService {
     int length = querySnapshot.docs.length;
     return length;
   }
+
+  Future<int> getLength3() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('materi3').get();
+    int length = querySnapshot.docs.length;
+    return length;
+  }
 }
