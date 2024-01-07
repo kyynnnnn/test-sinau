@@ -86,4 +86,18 @@ class AuthService {
       return 'Gratis';
     }
   }
+
+  Future<int> getLength1() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('materi').get();
+    int length = querySnapshot.docs.length;
+    return length;
+  }
+
+  Future<int> getLength2() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('materi2').get();
+    int length = querySnapshot.docs.length;
+    return length;
+  }
 }
