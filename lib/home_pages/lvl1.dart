@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/widgets/colors.dart';
 
 class pageLvl1 extends StatefulWidget {
@@ -11,6 +12,32 @@ class pageLvl1 extends StatefulWidget {
 }
 
 class _pageLvl1State extends State<pageLvl1> {
+  String member = '';
+  int lenght = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getNamed();
+  }
+
+  void getNamed() async {
+    final tes = await AuthService().getStatus();
+
+    print(tes);
+
+    setState(() {
+      member = tes.toString();
+
+      if (member == "VIP") {
+        lenght = 3;
+        print('tes');
+      } else {
+        lenght = 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +98,7 @@ class _pageLvl1State extends State<pageLvl1> {
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: users.length,
+                          itemCount: lenght,
                           itemBuilder: (context, index) {
                             final user = users[index];
                             return Container(

@@ -70,4 +70,20 @@ class AuthService {
       return 'null';
     }
   }
+
+  Future<String?> getStatus() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    String? userId = auth.currentUser?.uid;
+
+    final docRef = firestore.collection('users').doc(userId);
+    DocumentSnapshot doc = await docRef.get();
+
+    if (doc.exists) {
+      final data = doc.data() as Map<String, dynamic>;
+      return data['member'];
+    } else {
+      return 'Gratis';
+    }
+  }
 }
