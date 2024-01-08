@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PurchaseConfirmationDialog {
   static Future<bool?> show(BuildContext context) async {
@@ -6,21 +7,39 @@ class PurchaseConfirmationDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Konfirmasi Pembelian'),
+          title: Text(
+            'Konfirmasi Pembelian',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(),
+          ),
           content: Text(
-              'Apakah Anda yakin ingin membeli Membership VIP seharga Rp.59.000?'),
+            'Apakah Anda yakin ingin membeli Membership VIP seharga Rp.59.000?',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: Text('Batal'),
+              child: Text(
+                'Batal',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(),
+              ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text('Beli'),
+              child: Text(
+                'Beli',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ),
           ],
         );
@@ -35,20 +54,39 @@ class CancelConfirmationDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Konfirmasi Pembatalan'),
-          content: Text('Apakah Anda yakin ingin membatalkan Membership VIP?'),
+          title: Text(
+            'Konfirmasi Pembatalan',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(),
+          ),
+          content: Text(
+            'Apakah Anda yakin ingin membatalkan Membership VIP?',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: Text('Tidak'),
+              child: Text(
+                'Tidak',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text('Ya'),
+              child: Text(
+                'Ya',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(),
+              ),
             ),
           ],
         );
@@ -92,24 +130,86 @@ class Logouts {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Konfirmasi Logout'),
-          content: Text('Apakah Anda benar-benar ingin logout?'),
+          title: Text(
+            'Konfirmasi Logout',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(),
+          ),
+          content: Text(
+            'Apakah Anda benar-benar ingin logout?',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(),
+          ),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: Text('Batal'),
-            ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text(
+                  'Batal',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                )),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text('Logout'),
+              child: Text(
+                'Logout',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(),
+              ),
             ),
           ],
         );
       },
+    );
+  }
+}
+
+// class Confirm {
+//   void _showPurchaseAlertDialog(BuildContext context) {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text('Terimakasih!'),
+//           content: Text('Terimakasih atas pembelian Anda!'),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//                 // Tambahkan ini jika Anda ingin menyegarkan halaman
+//                 setState(() {
+//                   // Tambahkan perubahan status atau logika penyegaran halaman di sini
+//                 });
+//               },
+//               child: Text('OK'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+
+class YourButtonWidget extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  YourButtonWidget({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    // Tampilan tombol pembelian
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Text('Beli'),
+      ),
     );
   }
 }

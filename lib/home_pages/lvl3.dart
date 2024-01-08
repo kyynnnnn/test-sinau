@@ -236,6 +236,116 @@ class _pageLvl3State extends State<pageLvl3> {
                                               'member': 'VIP',
                                             });
                                             print('Pembelian dikonfirmasi');
+
+                                            // Tampilkan CircularProgressIndicator selama 1 detik
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                // Tampilkan CircularProgressIndicator
+                                                return AlertDialog(
+                                                  content: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      CircularProgressIndicator(),
+                                                      SizedBox(height: 16),
+                                                      Text(
+                                                        'Menunggu...',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts
+                                                            .plusJakartaSans(),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            // Tunggu sebelum menampilkan AlertDialog selanjutnya
+                                            await Future.delayed(
+                                                Duration(seconds: 1));
+
+                                            // Tutup dialog CircularProgressIndicator
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+
+                                            // Update variabel 'member' menjadi 'VIP'
+
+                                            setState(() {
+                                              member = 'VIP';
+                                            });
+
+                                            // Tambahkan AlertDialog baru setelah pembelian dikonfirmasi
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                    'Terimakasih!',
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  content: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        'Terimakasih atas pembelian Anda!',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts
+                                                            .plusJakartaSans(),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Text(
+                                                        'Status Member Anda kini adalah :',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts
+                                                            .plusJakartaSans(),
+                                                      ),
+                                                      Text(
+                                                        'User VIP',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts
+                                                            .plusJakartaSans(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          getNamed();
+                                                        });
+                                                        print(
+                                                            'Menekan tombol OK');
+                                                        Navigator.of(context,
+                                                                rootNavigator:
+                                                                    true)
+                                                            .pop(); // Tutup dialog terakhir
+                                                        print(
+                                                            'Dialog terakhir ditutup');
+
+                                                        // Navigasi kembali ke halaman sebelumnya
+                                                        //Navigator.of(context).pop();
+                                                        print(
+                                                            'Navigasi kembali ke halaman sebelumnya');
+                                                      },
+                                                      child: Text('OK'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
                                           } else {
                                             print('Pembelian dibatalkan');
                                           }

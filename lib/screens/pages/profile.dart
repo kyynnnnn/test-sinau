@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sinau/data/popup_confirmation.dart';
 import 'package:sinau/data/tap.dart';
+// import 'package:sinau/data/widget_confirm';
 import 'package:sinau/firebase/auth_service.dart';
 import 'package:sinau/screens/pages/profile_edit.dart';
 import 'package:sinau/widgets/colors.dart';
@@ -24,6 +27,7 @@ class _ProfilePageeState extends State<ProfilePagee> {
   void initState() {
     super.initState();
     getStatus();
+    _startPurchase();
   }
 
   void getStatus() async {
@@ -34,10 +38,17 @@ class _ProfilePageeState extends State<ProfilePagee> {
     });
   }
 
+  Future<void> _startPurchase() async {
+    // Simulasi panggilan Firebase
+    await Future.delayed(Duration(seconds: 2));
+    // Implementasi logika pembelian dan pembaruan ke Firebase di sini
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
     String? userId = auth.currentUser?.uid;
+    //final Completer<void> _purchaseCompleter = Completer<void>();
 
     return doubleTap(
       child: Scaffold(
@@ -145,15 +156,13 @@ class _ProfilePageeState extends State<ProfilePagee> {
                                       bool? result =
                                           await PurchaseConfirmationDialog.show(
                                               context);
-                                      if (result!) {
+
+                                      if (result != null && result) {
                                         final FirebaseFirestore firestore =
                                             FirebaseFirestore.instance;
-
                                         FirebaseAuth auth =
                                             FirebaseAuth.instance;
-
                                         String? userId = auth.currentUser?.uid;
-
                                         final docUser = firestore
                                             .collection('users')
                                             .doc(userId);
@@ -161,7 +170,105 @@ class _ProfilePageeState extends State<ProfilePagee> {
                                         docUser.update({
                                           'member': 'VIP',
                                         });
+
                                         print('Pembelian dikonfirmasi');
+
+                                        // Tampilkan CircularProgressIndicator selama 1 detik
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            // Tampilkan CircularProgressIndicator
+                                            return AlertDialog(
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  CircularProgressIndicator(),
+                                                  SizedBox(height: 16),
+                                                  Text(
+                                                    'Menunggu...',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        // Tunggu sebelum menampilkan AlertDialog selanjutnya
+                                        await Future.delayed(
+                                            Duration(seconds: 1));
+
+                                        // Tutup dialog CircularProgressIndicator
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop();
+
+                                        // Update variabel 'member' menjadi 'VIP'
+                                        setState(() {
+                                          member = 'VIP';
+                                        });
+
+                                        // Tambahkan AlertDialog baru setelah pembelian dikonfirmasi
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                'Terimakasih!',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              content: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    'Terimakasih atas pembelian Anda!',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(),
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Text(
+                                                    'Status Member Anda kini adalah :',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(),
+                                                  ),
+                                                  Text(
+                                                    'User VIP',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ],
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    print('Menekan tombol OK');
+                                                    Navigator.of(context,
+                                                            rootNavigator: true)
+                                                        .pop(); // Tutup dialog terakhir
+                                                    print(
+                                                        'Dialog terakhir ditutup');
+
+                                                    // Navigasi kembali ke halaman sebelumnya
+                                                    //Navigator.of(context).pop();
+                                                    print(
+                                                        'Navigasi kembali ke halaman sebelumnya');
+                                                  },
+                                                  child: Text('OK'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       } else {
                                         print('Pembelian dibatalkan');
                                       }
@@ -212,9 +319,98 @@ class _ProfilePageeState extends State<ProfilePagee> {
                                         docUser.update({
                                           'member': 'Gratis',
                                         });
-                                        print('Pembelian dikonfirmasi');
+                                        print('Pembatalan dikonfirmasi');
+
+                                        // Tampilkan CircularProgressIndicator selama 1 detik
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            // Tampilkan CircularProgressIndicator
+                                            return AlertDialog(
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  CircularProgressIndicator(),
+                                                  SizedBox(height: 16),
+                                                  Text(
+                                                    'Menunggu...',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        // Tunggu sebelum menampilkan AlertDialog selanjutnya
+                                        await Future.delayed(
+                                            Duration(seconds: 1));
+
+                                        // Tutup dialog CircularProgressIndicator
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop();
+
+                                        // Update variabel 'member' menjadi 'VIP'
+                                        setState(() {
+                                          member = 'Gratis';
+                                        });
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                'Terimakasih!',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              content: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    'Status Member Anda kini adalah :',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(),
+                                                  ),
+                                                  Text(
+                                                    'User Gratis',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ],
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    print('Menekan tombol OK');
+                                                    Navigator.of(context,
+                                                            rootNavigator: true)
+                                                        .pop(); // Tutup dialog terakhir
+                                                    print(
+                                                        'Dialog terakhir ditutup');
+
+                                                    // Navigasi kembali ke halaman sebelumnya
+                                                    //Navigator.of(context).pop();
+                                                    print(
+                                                        'Navigasi kembali ke halaman sebelumnya');
+                                                  },
+                                                  child: Text('OK'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       } else {
-                                        print('Pembelian dibatalkan');
+                                        print('Pembatalan dibatalkan');
                                       }
                                     },
                                     child: Container(
@@ -244,7 +440,12 @@ class _ProfilePageeState extends State<ProfilePagee> {
                               onPressed: () {
                                 Navigator.pushNamed(context, '/edit-profile');
                               },
-                              child: Text('Edit Profil'),
+                              child: Text(
+                                'Edit Profil',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                             ElevatedButton(
                               onPressed: () async {
@@ -266,7 +467,12 @@ class _ProfilePageeState extends State<ProfilePagee> {
                                 backgroundColor: Colors.red,
                                 foregroundColor: Colors.white,
                               ),
-                              child: Text('Logout'),
+                              child: Text(
+                                'Logout',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ],
                         );

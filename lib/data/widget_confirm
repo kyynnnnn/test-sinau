@@ -1,0 +1,73 @@
+// import 'dart:async';
+
+// import 'package:flutter/material.dart';
+
+// class confirmWidget extends StatefulWidget {
+//   final Future<void> Function() onPurchaseConfirmed;
+
+//   confirmWidget({required this.onPurchaseConfirmed});
+
+//   @override
+//   _confirmWidgetState createState() => _confirmWidgetState();
+// }
+
+// class _confirmWidgetState extends State<confirmWidget> {
+//   late Future<void> _purchaseFuture;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Memulai proses pembelian
+//     _purchaseFuture = _startPurchase();
+//   }
+
+//   Future<void> _startPurchase() async {
+//     // Simulasi panggilan Firebase
+//     await Future.delayed(Duration(seconds: 2));
+//     // Implementasi logika pembelian dan pembaruan ke Firebase di sini
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return YourButtonWidget(
+//       onPressed: () async {
+//         // Tampilkan CircularProgressIndicator selama menunggu respon dari Firebase
+//         showDialog(
+//           context: context,
+//           builder: (BuildContext context) {
+//             return Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           },
+//         );
+
+//         // Tunggu hingga proses pembelian selesai
+//         await _purchaseFuture;
+
+//         // Tutup ProgressDialog
+//         Navigator.of(context).pop();
+
+//         // Selesaikan Future untuk memberitahu widget lain bahwa pembelian selesai
+//         widget.onPurchaseComplete.complete();
+//       },
+//     );
+//   }
+// }
+
+// class YourButtonWidget extends StatelessWidget {
+//   final VoidCallback onPressed;
+
+//   YourButtonWidget({required this.onPressed});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // Tampilan tombol pembelian
+//     return InkWell(
+//       onTap: onPressed,
+//       child: Container(
+//         padding: EdgeInsets.all(16.0),
+//         child: Text('Beli'),
+//       ),
+//     );
+//   }
+// }
