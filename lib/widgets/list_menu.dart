@@ -17,7 +17,7 @@ class ListViewCustom extends StatelessWidget {
               height: 110.0,
               decoration: BoxDecoration(
                 border: Border.all(color: green, width: 2.0),
-                color: Colors.white,
+                color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: InkWell(
@@ -52,7 +52,7 @@ class ListViewCustom extends StatelessWidget {
                             style: GoogleFonts.plusJakartaSans(
                                 color: black,
                                 fontSize: 15.0,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w800),
                           ),
                         ],
                       )

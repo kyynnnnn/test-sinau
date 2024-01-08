@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     if (auth.currentUser == null) {
       Navigator.pushReplacementNamed(context, '/onboarding');
     } else {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
