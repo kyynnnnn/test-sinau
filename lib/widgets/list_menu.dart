@@ -16,16 +16,8 @@ class ListViewCustom extends StatelessWidget {
               width: 361.0,
               height: 110.0,
               decoration: BoxDecoration(
-                //border: Border.all(color: green, width: 2.0),
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.green,
-                    Colors.greenAccent,
-                  ],
-                ),
-                //color: Color.fromARGB(255, 138, 255, 21),
+                border: Border.all(color: green, width: 2.0),
+                color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: InkWell(
